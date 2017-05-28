@@ -19,7 +19,7 @@ public class Activator implements BundleActivator {
  
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
-		System.out.println("Starting Sample Ipe");
+		System.out.println("Starting Bedroom");
 		new ServiceTracker<Object, Object>(bundleContext, CseService.class.getName(), null){
  
 			@Override
@@ -54,7 +54,7 @@ public class Activator implements BundleActivator {
  
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
-		System.out.println("Stopping Sample Ipe");
+		System.out.println("Stopping Bedroom");
 		if(monitor != null){
 			monitor.stop();
 			monitor = null;

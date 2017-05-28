@@ -1,3 +1,18 @@
+/******************************************************************************/
+/*        @TITRE : Light.java                                                 */
+/*      @VERSION : 0.1                                                        */
+/*     @CREATION : 05 23, 2017                                                */
+/* @MODIFICATION :                                                            */
+/*      @AUTEURS : Gianni D'Amico & Leo Granier                               */
+/*    @COPYRIGHT : Copyright (c) 2017                                         */
+/*                 Paul GUIRBAL                                               */
+/*                 Joram FILLOL-CARLINI                                       */
+/*                 Gianni D'AMICO                                             */
+/*                 Matthieu BOUGEARD                                          */
+/*                 Leo GRANIER                                                */
+/*      @LICENSE : MIT License (MIT)                                          */
+/******************************************************************************/
+
 package org.eclipse.om2m.bedroom;
 
 import java.util.HashMap;
@@ -17,15 +32,15 @@ public class Light {
 	static String DATA = "STATE";
 	
 	public static Map<String,LED> lights;
-	public static LED Led1 ;
-	public static LED Led2 ; 
+	public static LED Led3 ;
+	public static LED Led4 ; 
 	
 	public static void createLightsMap () {
-		Led1 = new LED(3,"LED1");
-		Led2 = new LED(4,"LED2");
+		Led3 = new LED(3,"LED3");
+		Led4 = new LED(4,"LED4");
 		lights = new HashMap<>();
-		lights.put("LED1", Led1); 
-		lights.put("LED2", Led2); 
+		lights.put("LED3", Led3); 
+		lights.put("LED4", Led4); 
 	}
 
 	public static void createLightsResources() {

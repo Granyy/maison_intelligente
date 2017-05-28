@@ -1,3 +1,18 @@
+/******************************************************************************/
+/*        @TITRE : SensorButton.java                                          */
+/*      @VERSION : 0.1                                                        */
+/*     @CREATION : 05 23, 2017                                                */
+/* @MODIFICATION :                                                            */
+/*      @AUTEURS : Gianni D'Amico                                             */
+/*    @COPYRIGHT : Copyright (c) 2017                                         */
+/*                 Paul GUIRBAL                                               */
+/*                 Joram FILLOL-CARLINI                                       */
+/*                 Gianni D'AMICO                                             */
+/*                 Matthieu BOUGEARD                                          */
+/*                 Leo GRANIER                                                */
+/*      @LICENSE : MIT License (MIT)                                          */
+/******************************************************************************/
+
 package org.eclipse.om2m.bedroom;
 
 import mraa.Gpio;
