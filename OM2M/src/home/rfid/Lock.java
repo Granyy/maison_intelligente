@@ -23,8 +23,8 @@ public class Lock {
 	 * - int unlocked : position en degres du servo en position ouverte
 	 */
 	
-	static final int locked = 0;
-	static final int unlocked = 90;
+	static final int locked = 90;
+	static final int unlocked = 0;
 	
 	 /**  Attribut :
 	 *  - pm_servo.ES08A servo : reference au servo

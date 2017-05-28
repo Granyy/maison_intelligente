@@ -3,7 +3,6 @@ package org.eclipse.om2m.home.alarme;
 import org.eclipse.om2m.commons.constants.Constants;
 import org.eclipse.om2m.commons.obix.Bool;
 import org.eclipse.om2m.commons.obix.Contract;
-import org.eclipse.om2m.commons.obix.Int;
 import org.eclipse.om2m.commons.obix.Obj;
 import org.eclipse.om2m.commons.obix.Op;
 import org.eclipse.om2m.commons.obix.Uri;
@@ -12,9 +11,8 @@ import org.eclipse.om2m.commons.obix.io.ObixEncoder;
 public class ObixUtil {
  
 	
-	public static String getWindowSensorDataRep(boolean active, boolean open) {
+	public static String getWindowSensorDataRep(boolean open) {
 		Obj obj = new Obj();
-		obj.add(new Bool("active", active));
 		obj.add(new Bool("intrusion", open));
 		return ObixEncoder.toString(obj);
 	}
@@ -39,9 +37,11 @@ public class ObixUtil {
 		return ObixEncoder.toString(obj);
 	}
  
-	public static String getBuzzerDataRep(boolean value) {
+	public static String getBuzzerDataRep(boolean active, boolean value, boolean winForgot) {
 		Obj obj = new Obj();
+		obj.add(new Bool("active", active));
 		obj.add(new Bool("ring", value));
+		obj.add(new Bool("windowForgot", winForgot));
 		return ObixEncoder.toString(obj);
 	}
 	
@@ -61,13 +61,24 @@ public class ObixUtil {
 		opGetDirect.setIs(new Contract("execute"));
 		obj.add(opGetDirect);
 		
-		Op opON = new Op();
-		opON.setName("RING");
-		opON.setHref(new Uri(prefix + "?op=ring"));
-		opON.setIs(new Contract("execute"));
-		obj.add(opON);
+		Op opRing = new Op();
+		opRing.setName("RING");
+		opRing.setHref(new Uri(prefix + "?op=ring"));
+		opRing.setIs(new Contract("execute"));
+		obj.add(opRing);
 		
+		Op opActive = new Op();
+		opActive.setName("ACTIVE");
+		opActive.setHref(new Uri(prefix + "?op=active"));
+		opActive.setIs(new Contract("execute"));
+		obj.add(opActive);
  
+		Op opWinFor = new Op();
+		opWinFor.setName("WINDOW_FORGOT");
+		opWinFor.setHref(new Uri(prefix + "?op=winFor"));
+		opWinFor.setIs(new Contract("execute"));
+		obj.add(opWinFor);
+		
 		return ObixEncoder.toString(obj);
 	}
  

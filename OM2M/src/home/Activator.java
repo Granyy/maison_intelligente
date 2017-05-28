@@ -19,7 +19,7 @@ public class Activator implements BundleActivator {
  
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
-		System.out.println("Starting app");
+		System.out.println("Starting home");
 		new ServiceTracker<Object, Object>(bundleContext, CseService.class.getName(), null){
  
 			@Override
@@ -54,7 +54,7 @@ public class Activator implements BundleActivator {
  
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
-		System.out.println("Stopping app");
+		System.out.println("Stopping home");
 		if(monitor != null){
 			monitor.stop();
 			monitor = null;

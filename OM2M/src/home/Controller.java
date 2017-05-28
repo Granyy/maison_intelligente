@@ -6,6 +6,8 @@ package org.eclipse.om2m.home;
 import org.eclipse.om2m.commons.constants.ResponseStatusCode;
 import org.eclipse.om2m.commons.resource.RequestPrimitive;
 import org.eclipse.om2m.commons.resource.ResponsePrimitive;
+import org.eclipse.om2m.home.alarme.Alarm;
+import org.eclipse.om2m.home.alarme.WindowSensor;
 import org.eclipse.om2m.home.environment.EnvironmentController;
 import org.eclipse.om2m.home.environment.Luminosite;
 import org.eclipse.om2m.home.environment.Temperature;
@@ -40,6 +42,14 @@ public class Controller implements InterworkingService{
 			}
 			else if (appId.equals(Temperature.appId) || appId.equals(Ventilateur.appId) || appId.equals("LED1") || appId.equals("LED2") || appId.equals(Luminosite.appId) || appId.equals("BOUTON")){
 				response = EnvironmentController.Controller(appId, valueOp, response);
+				return response;
+				
+			} else if (appId.equals(Alarm.appId)) {
+				response = Alarm.BuzzerController(valueOp, response);
+				return response;
+			}
+			else if (appId.equals(WindowSensor.appId)) {
+				response = WindowSensor.WindowSensorController(appId, valueOp, response);
 				return response;
 			}
 			else {

@@ -2,6 +2,10 @@ package org.eclipse.om2m.home;
 
 import org.eclipse.om2m.commons.constants.Constants;
 import org.eclipse.om2m.core.service.CseService;
+import org.eclipse.om2m.home.alarme.Alarm;
+import org.eclipse.om2m.home.alarme.Alarm.BuzzerListener;
+import org.eclipse.om2m.home.alarme.WindowSensor;
+import org.eclipse.om2m.home.alarme.WindowSensor.WindowSensorListener;
 import org.eclipse.om2m.home.environment.Temperature;
 import org.eclipse.om2m.home.environment.Ventilateur;
 import org.eclipse.om2m.home.environment.Temperature.TemperatureListener;
@@ -35,6 +39,8 @@ public class Monitor {
 	private LightListener lightListener;
 	private LuminositeListener luminositeListener;
 	private ButtonListener buttonListener;
+	private WindowSensorListener windowSensorListener;
+	private BuzzerListener buzzerListener;
  
 	public Monitor(CseService cseService){
 		CSE = cseService;
@@ -79,23 +85,28 @@ public class Monitor {
 		buttonListener = new ButtonListener();
 		buttonListener.start();
 	}
+	
+	public void listenToWindow(){
+		windowSensorListener = new WindowSensorListener();
+		windowSensorListener.start();
+	}
+	
+	public void listenToBuzzer(){
+		buzzerListener = new BuzzerListener();
+		buzzerListener.start();
+	}
  
 	public void start(){
 		Ventilateur.createFanResources();
-		
 		Temperature.createTemperatureResources();
-		
 		Luminosite.createLuminositeResources();
-		
 		Light.createLightsResources();
-		
-		UserProfile.createProfileResources();
-		
-		Doorlock.createDoorlockResources();
-		
 		Notifier.createNotifierResource();
-		
+		UserProfile.createProfileResources();
+		Doorlock.createDoorlockResources();
 		ButtonLed.createButtonResources();
+		WindowSensor.createIRSensorResources();
+		Alarm.createAlarmResources();
 		
 		listenToTemperature();
 		listenToFan();
@@ -105,6 +116,8 @@ public class Monitor {
 		listenToUser();
 		listenToDoorlock();
 		listenToNotifier();
+		listenToWindow();
+		listenToBuzzer();
 	}
  
 	public void stop(){
@@ -128,6 +141,12 @@ public class Monitor {
 		}
 		if(buttonListener != null && buttonListener.isAlive()){
 			buttonListener.stopThread();
+		}
+		if(windowSensorListener != null && windowSensorListener.isAlive()){
+			windowSensorListener.stopThread();
+		}
+		if(buzzerListener != null && buzzerListener.isAlive()){
+			buzzerListener.stopThread();
 		}
 	}
  

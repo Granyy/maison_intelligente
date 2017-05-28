@@ -73,13 +73,14 @@ public class Ventilateur {
 					memorizedtempTh = tempTh ;
 					
 			        clim.chooseDuty() ;
- 
+			        clim.set_duty();
+			        
 					// Create a data contentInstance
 			        String content = ObixUtil.getFanDataRep(fanLevel);
 					RessourceManager.createDataContentInstance(appId, DATA, content);
 				}
 				
-				clim.set_duty();
+				
 				
 				
 				// Wait for 2 seconds

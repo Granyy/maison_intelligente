@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*        @TITRE : Alarm.java                                              */
-/*      @VERSION : 0.1                                                        */
+/*      @VERSION : 0.3                                                    */
 /*     @CREATION : 05 10, 2017                                                */
 /* @MODIFICATION :                                                            */
 /*      @AUTEURS : Matthieu Bougeard                                                */
@@ -20,13 +20,14 @@ import org.eclipse.om2m.commons.constants.ResponseStatusCode;
 import org.eclipse.om2m.commons.resource.ResponsePrimitive;
 import org.eclipse.om2m.home.Monitor;
 import org.eclipse.om2m.home.RessourceManager;
+import org.eclipse.om2m.home.rfid.UserProfile;
 
 
 public class Alarm {
 
 	/**
 	 * Constantes de classe :
-	 * - String appId : ID de l'AE
+	 * - String appId : ID de l'AE			
 	 * - String DESCRIPTOR : ID du descriptor container
 	 * - String DATA : ID du data container
 	 */
@@ -37,23 +38,24 @@ public class Alarm {
 	
 	 /**  Variables de classe :
 	 *  - 
-	 *  - boolean intrusion : situation d'effraction détéctée
+	 *  - boolean intrusion : situation d'effraction dï¿½tï¿½ctï¿½e
 	 */
 	static boolean intrusion=false;
-	static boolean ring;
+	static boolean ring = false;
 	private static Buzzer buzzer;
+	private static boolean windowForgot=false;
 	
 	/**
 	 * createAlarmResources
-	 * - crée un AE
-	 * - crée un data container
-	 * - crée un descriptor container
-	 * - les noms sont configurés à partir des différentes constantes de classe
+	 * - crï¿½e un AE
+	 * - crï¿½e un data container
+	 * - crï¿½e un descriptor container
+	 * - les noms sont configurï¿½s ï¿½ partir des diffï¿½rentes constantes de classe
 	 */
 	
 	public static void createAlarmResources(){
 		String content;
-	       
+	    buzzer = new Buzzer(4);
 	    // Create the AE
 	    ResponsePrimitive response = RessourceManager.createAE(Monitor.ipeId, appId);
 	       
@@ -62,55 +64,82 @@ public class Alarm {
 	    	   	RessourceManager.createContainer(appId, DESCRIPTOR, DATA, 5);
 				
 				// Create the DATA contentInstance
-				content = ObixUtil.getBuzzerDataRep(false);
+				content = ObixUtil.getBuzzerDataRep(buzzer.get_Active(),false, false);
 				RessourceManager.createDataContentInstance(appId, DATA, content);
 				
 				// Create the DESCRIPTOR contentInstance
-				content = ObixUtil.getWindowSensorDescriptorRep(appId, Monitor.ipeId);
+				content = ObixUtil.getBuzzerDescriptorRep(appId, Monitor.ipeId);
 				RessourceManager.createDescriptionContentInstance(Monitor.ipeId, appId, DESCRIPTOR, content);
 	     }
 	    
-		Buzzer buzzer = new Buzzer();   
-		buzzer.init_Buzzer(8);
 		
 	 }
 	
 	/**
-	 * WindowSensorlockListener
-	 * - fonction principale s'exécutant dans le monitor
-	 * - surveille les changements de la variable intrusion :
-	 * 		- true : sonner buzzer
-	 * 		- false : arrêter buzzer
+	 * WindowSensorkListener
+	 * - fonction principale s'exï¿½cutant dans le monitor
+	 * - gï¿½re deux modes de sï¿½curitï¿½
+	 * 		-quand la derniere personne qui part oublie de fermer la fenetre => envoi d'un mail
+	 * 		-quand personne n'est ï¿½ la maison, une ouverture de la fenetre dï¿½clenche l'alarme
 	 */
 	
 	
 	public static class BuzzerListener extends Thread{
 		 
 		private boolean running = true;
-		private boolean memorizedOpenValue = false;
- 
+		private boolean memorizedHomeValue = false; //ancienne valeur pour UserProfile.isSomeoneHome
+		private boolean memorizedRingValue = false;
+		
+		
 		@Override
 		public void run() {
 			
 			while(running){
-				// If the actuator state has changed
-				if(memorizedOpenValue != intrusion){
-					// Memorize the new window state
-					memorizedOpenValue = intrusion;
-					// Create a data contentInstance
-					String content = ObixUtil.getBuzzerDataRep(intrusion);
+						
+				if (memorizedHomeValue != UserProfile.isSomeoneHome()){
+					
+					memorizedHomeValue=UserProfile.isSomeoneHome();
+					
+					if (memorizedHomeValue) {
+						buzzer.set_Active(false);
+						windowForgot=false;
+						ring = false;
+					}
+					else if (memorizedHomeValue == false) {
+						buzzer.set_Active(true);
+						if (Alarm.intrusion==true){
+							windowForgot=true;
+							//System.out.println("WINDOW FORGOT = TRUE");
+						}else{
+							windowForgot=false;
+							//System.out.println("WINDOW FORGOT = FALSE");
+						}
+					}
+					
+					//System.out.println("CHANGEMENT ACTIVE");
+					String content = ObixUtil.getBuzzerDataRep(buzzer.get_Active(), ring, windowForgot);
 					RessourceManager.createDataContentInstance(appId, DATA, content);
-					// Wait for 5 seconds
-					if (intrusion==true){
-						buzzer.sonner_Buzzer();
-						intrusion = false;
-					}
-					else if (intrusion==false) {
-						buzzer.stopper_Buzzer();
-					}
 				}
+				
+				
+			//gestion alarme intrusion
+				if (buzzer.get_Active()==true && intrusion==true && windowForgot==false){
+					ring = true;
+					buzzer.sonner_Buzzer();
+				}
+				else {
+					ring = false;
+					buzzer.stopper_Buzzer();
+				}
+				
+				if (memorizedRingValue!=ring) {
+					String content = ObixUtil.getBuzzerDataRep(buzzer.get_Active(), ring, windowForgot);
+					RessourceManager.createDataContentInstance(appId, DATA, content);
+				}
+				
+				
 			try{
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}
@@ -127,20 +156,20 @@ public class Alarm {
 	
 	/**
 	 * BuzzerController
-	 * - fonction s'exécutant dans le Controller, gérant les requêtes à destination de Doorlock
-	 * - query gérés :
+	 * - fonction s'exï¿½cutant dans le Controller, gï¿½rant les requï¿½tes ï¿½ destination de Doorlock
+	 * - query gï¿½rï¿½s :
 	 * 		- get : renvoie la valeur intrusion
 	 * 		- intrusion : intrusion vaut true, le buzzer sonne
 	 * @param : 
-	 * - String valueOp : query de la requête reçue
-	 * - ResponsePrimitive responsein : reponse partiellement construite par le Controller général
+	 * - String valueOp : query de la requï¿½te reï¿½ue
+	 * - ResponsePrimitive responsein : reponse partiellement construite par le Controller gï¿½nï¿½ral
 	 */
 	
 	public static ResponsePrimitive BuzzerController(String valueOp, ResponsePrimitive responsein) {
 		ResponsePrimitive response = responsein;
 		switch(valueOp){
 		case "get":
-			response.setContent(ObixUtil.getBuzzerDataRep(intrusion));
+			response.setContent(ObixUtil.getBuzzerDataRep(buzzer.get_Active(),ring,windowForgot));
 			response.setResponseStatusCode(ResponseStatusCode.OK);
 			return response;
 		case "ring":

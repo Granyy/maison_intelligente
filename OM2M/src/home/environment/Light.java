@@ -32,7 +32,7 @@ public class Light {
 	
 	public static void createLightsMap () {
 		Led1 = new LED(3,"LED1");
-		Led2 = new LED(4,"LED2");
+		Led2 = new LED(10,"LED2");
 		lights = new HashMap<>();
 		lights.put("LED1", Led1); 
 		lights.put("LED2", Led2); 

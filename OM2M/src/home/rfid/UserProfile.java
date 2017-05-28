@@ -95,7 +95,7 @@ public class UserProfile {
 	
 	public static boolean isSomeoneHome() {
 		boolean someoneHome = false;
-		someoneHome = profile.get("NOBODY").isHome();
+		someoneHome = !(profile.get("NOBODY").isHome());
 	    return someoneHome;
 	}
 	

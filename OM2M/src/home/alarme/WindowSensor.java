@@ -14,14 +14,14 @@ public class WindowSensor {
 	 * - String DESCRIPTOR : ID du descriptor container
 	 * - String DATA : ID du data container
 	 */
-	static String appId = "WINDOW";
+	public static String appId = "WINDOW";
 	static String DESCRIPTOR = "DESCRIPTOR";
-	static String DATA = "WindowSensor";
+	static String DATA = "WINDOW";
 	
 	
 	/**
 	 * Variables de classe :
-	 * - IRSensor : référence au capteur IR fenetre
+	 * - IRSensor : rï¿½fï¿½rence au capteur IR fenetre
 	 */
 	
 	public static capteurIR IRSensor;
@@ -34,11 +34,9 @@ public class WindowSensor {
 	public static void createIRSensorResources(){
 		
 		String content;
-		capteurIR IRSensor;
 		
-		IRSensor = new capteurIR();
-		IRSensor.init_Capteur(7);
-		
+		IRSensor = new capteurIR(7);
+
 	    // Create the AE
 	    ResponsePrimitive response = RessourceManager.createAE(Monitor.ipeId, appId);
 	       
@@ -47,7 +45,7 @@ public class WindowSensor {
 	    	   	RessourceManager.createContainer(appId, DESCRIPTOR, DATA, 5);
 				
 				// Create the DATA contentInstance
-				content = ObixUtil.getWindowSensorDataRep(IRSensor.get_Active(),IRSensor.get_Capteur());
+				content = ObixUtil.getWindowSensorDataRep(IRSensor.get_Capteur());
 				RessourceManager.createDataContentInstance(appId, DATA, content);
 				
 				// Create the DESCRIPTOR contentInstance
@@ -58,37 +56,51 @@ public class WindowSensor {
 		
 		/**
 		 * WindowSensorListener
-		 * - fonction principale s'exécutant dans le monitor
-		 * - Si personne n'est à la maison : 
-		 * 		-lis le capteur IR régulèrement
+		 * - fonction principale s'exï¿½cutant dans le monitor
+		 * - Si personne n'est ï¿½ la maison : 
+		 * 		-lis le capteur IR rï¿½gulï¿½rement
 		 * 		-passe l'alarme active
-		 * - si une intrusion est détéctée :
+		 * - si une intrusion est dï¿½tï¿½ctï¿½e :
 		 * 		- change le statut
 		 */
 		
 		public static class WindowSensorListener extends Thread{
 			 
 			private boolean running = true;
-	 
+			private boolean memorizedIntrusionValue = false;
+			
 			@Override
 			public void run() {
-				
+			
+			
 				while(running){
-					//si personne n'est à la maison
-					if (UserProfile.isSomeoneHome() == false){
-						IRSensor.set_Active(true); //active l'alarme
+
 						//si le capteur fenetre capte une presence
+						//System.out.println("Y'A PERSONNE A LA MAISON !");
+						
+						
 						if (IRSensor.get_Capteur()==true){
+							//System.out.println("INTRUSION");
 							Alarm.intrusion=true;
-						}else{Alarm.intrusion=false;}	
+						}else{
+							//System.out.println("TOUT VA BIEN");
+							Alarm.intrusion=false;		
+							}
+						if (memorizedIntrusionValue != Alarm.intrusion){
+							//System.out.println("CHANGEMENT VAL INTRUSION");
+							String content = ObixUtil.getWindowSensorDataRep(Alarm.intrusion);
+							RessourceManager.createDataContentInstance(appId, DATA, content);
+							memorizedIntrusionValue = Alarm.intrusion;
+						}
 					}
+
 					try {
-						Thread.sleep(500);
+						Thread.sleep(1000);
 					} catch (InterruptedException e){
 						e.printStackTrace();
 					}
 				}
-			}
+			
 	 
 			public void stopThread(){
 				running = false;
@@ -102,7 +114,7 @@ public class WindowSensor {
 			ResponsePrimitive response = responsein;
 			switch(valueOp){
 			case "get":
-				response.setContent(ObixUtil.getWindowSensorDataRep(IRSensor.get_Active(), IRSensor.get_Capteur()));
+				response.setContent(ObixUtil.getWindowSensorDataRep(IRSensor.get_Capteur()));
 				response.setResponseStatusCode(ResponseStatusCode.OK);
 				return response;
 			default:

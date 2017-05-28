@@ -4,8 +4,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.eclipse.om2m.home.notifier.Notifier;
 import org.eclipse.om2m.home.rfid.User;
 import org.eclipse.om2m.home.environment.Ventilateur;
+
 
 public class EnvironmentPreferences {
 
@@ -16,7 +18,7 @@ public class EnvironmentPreferences {
 		Light.led1Pref = user.getLights().get("LED1");
 		Light.Led2.setActivate(user.getLights().get("LED2"));
 		Light.led2Pref = user.getLights().get("LED2");
-		
+		Notifier.ledRGB.setLedColor(user.getRGB());
 		
 		LED Led ;
 		Set<Entry<String, LED>> setHm = Light.lights.entrySet();
