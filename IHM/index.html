@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="IHM">
+        <meta name="author" content="Paul Guirbal">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+        <title>IHM</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="./bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="./main.css" rel="stylesheet">
+      
+        <!-- Custom font -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">  
+        
+        <link href="noUiSlider.9.2.0/nouislider.css" rel="stylesheet">
+    </head>
+
+    <body>
+        
+        <!-- Side menu pour smartphones et tablettes -->
+        <div id="mySidenav" class="sidenav bg-vert">
+            <a href="javascript:void(0)" class="closebtn txt-noir" onclick="closeNav()">&times;</a>
+            <a class="txt-noir" href="#">CONTROL</a>
+            <a class="txt-noir" href="joram">JORAM</a>
+            <a class="txt-noir" href="paul">PAUL</a>
+            <a class="txt-noir" href="general">GENERAL</a>
+        </div>
+        
+            <!-- Barre de navigation -->
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <!-- Sur ordinateurs -->
+                    <ul class="nav navbar-nav visible-md-block visible-lg-block">
+                        <li class="nav-item"><a class="txt-vert" href="#">CONTROL</a></li>
+                        <li class="nav-item"><a class="txt-vert" href="joram">JORAM</a></li>
+                        <li class="nav-item"><a class="txt-vert" href="paul">PAUL</a></li>
+                        <li class="nav-item"><a class="txt-vert" href="general">GENERAL</a></li>
+                    </ul>
+                    <!-- Sur smartphones et tablettes -->
+                    <div class="col-xs-1 visible-xs-block visible-sm-block small-menu txt-vert">
+                        <span style="cursor:pointer" onclick="openNav()"> &#9776; </span>
+                    </div>
+                    <div class="col-xs-4 col-xs-offset-3 visible-xs-block visible-sm-block small-menu txt-vert">
+                        MENU
+                    </div>
+                </div>
+            </nav>
+        
+        <div class="container-fluid">
+            <!-- Titre -->
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1" style="padding-top: 30px; padding-bottom: 10px;">
+                    <h1><span class="txt-vert">Control</span> panel</h1>
+                </div>
+            </div>
+            
+            <!-- Salon -->
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-xs-12"><h3>Living room</h3></div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">DOOR</span> 1</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_door_1" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'DOORLOCK',
+                                    'value': 'unlock'})"
+                                    class="btn btn-off">
+                                OPEN
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LIGHT</span> 1</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_light_1" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'LED1',
+                                    'value': 'toggle'})"
+                                    class="btn btn-off">
+                                OFF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LIGHT</span> 2</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_light_2" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'LED2',
+                                    'value': 'toggle'})"
+                                    class="btn btn-off">
+                                OFF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LIGHT</span> RGB</div>
+                        </div>
+                        <div class="col-xs-5 col-md-3" style="padding-top:14px;">
+                            <div id="slider_led"></div>
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 5px;">
+                            <div id="color_result"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">A/C</span></div>
+                        </div>
+                        <div class="col-xs-5 col-md-3" style="padding-top: 4px">
+                            <button type="button" 
+                                    id="button_temp_moins" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'FAN',
+                                    'value': 'thr_down'})"
+                                    class="btn btn_tmp btn-off">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </button>
+                            <span style="margin:5px; font-size:16px;" id="temp_salon_consigne">-- °C</span>
+                            <button type="button" 
+                                    id="button_temp_plus" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'FAN',
+                                    'value': 'thr_up'})"
+                                    class="btn btn_tmp btn-off">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col-xs-3" style="padding-top : 4px;">
+                            <span class="txt-vert" style="font-size:20px; text-align: left;" id="temp_salon">-- °C</span>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LUMINOSITY</span></div>
+                        </div>
+                        <div class="col-xs-5 col-md-3" style="padding-top: 4px">
+                            <button type="button" 
+                                    id="button_lumi_moins" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'LED1',
+                                    'value': 'thr_down'})"
+                                    class="btn btn_tmp btn-off">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </button>
+                            <span style="margin:5px; font-size:16px;" id="lumi_salon_consigne">-- lux</span>
+                            <button type="button" 
+                                    id="button_lumi_plus" onclick="set_actuator({
+                                    'gateway': 'mn-cse',
+                                    'user': 'CONTROL',
+                                    'device': 'LED1',
+                                    'value': 'thr_up'})"
+                                    class="btn btn_tmp btn-off">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col-xs-3" style="padding-top : 4px;">
+                            <span class="txt-vert" style="font-size:20px; text-align: left;" id="lumi_salon">-- lux</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        
+            <!-- Chambre -->
+            <div class="row" style="padding-bottom:50px;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-xs-12"><h3>Bed room</h3></div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">SLEEP</span> MODE</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_sleep_mode" onclick="set_actuator({
+                                    'gateway': 'mn-cse2',
+                                    'user': 'CONTROL',
+                                    'device': 'NIGHT',
+                                    'value': 'toggle'})"
+                                    class="btn btn-off">
+                                OFF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LED</span> 3</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_light_3" onclick="set_actuator({
+                                    'gateway': 'mn-cse2',
+                                    'user': 'CONTROL',
+                                    'device': 'LED3',
+                                    'value': 'toggle'})"
+                                    class="btn btn-off">
+                                OFF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-4">
+                            <div class="composant"><span class="txt-vert">LED</span> 4</div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" 
+                                    id="button_light_4" onclick="set_actuator({
+                                    'gateway': 'mn-cse2',
+                                    'user': 'CONTROL',
+                                    'device': 'LED4',
+                                    'value': 'toggle'})"
+                                    class="btn btn-off">
+                                OFF
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+        
+
+        <!-- Javascript -->
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        <!-- Slider -->
+        <script src="noUiSlider.9.2.0/nouislider.min.js"></script> 
+        <script>
+            var slider_led = document.getElementById('slider_led');
+            var resultElement = document.getElementById('color_result');
+            var setFan = 0;
+            var setLedColor = {'red':0,
+                               'green':0,
+                               'blue':0};
+            
+            noUiSlider.create(slider_led, {
+                start: 0,
+                step: 1,
+                connect: [true,false],
+                range: {
+                    'min': 0,
+                    'max': 8*255
+                }
+            });
+            
+            // Choix d'une couleur
+
+            slider_led.noUiSlider.on('slide',setColor);
+            // Met à jour la couleur du carré de visualisation de la couleur
+            function setColor(){
+                var value = slider_led.noUiSlider.get();
+                if(value < 255) {
+                    setLedColor.red = 255;
+                    setLedColor.green = 0;
+                    setLedColor.blue = 255-value;
+                } else if(value < 2*255) {
+                    setLedColor.red = 255-(value-255);
+                    setLedColor.green = 0;
+                    setLedColor.blue = 255;
+                } else if(value < 3*255) {
+                    setLedColor.red = 0;
+                    setLedColor.green = (value-2*255);
+                    setLedColor.blue = 255;
+                } else if(value < 4*255) {
+                    setLedColor.red = 0;
+                    setLedColor.green = 255;
+                    setLedColor.blue = 255-(value-3*255);
+                } else if(value < 5*255) {
+                    setLedColor.red = (value-4*255);
+                    setLedColor.green = 255;
+                    setLedColor.blue = 0;
+                } else if(value < 6*255) {
+                    setLedColor.red = 255;
+                    setLedColor.green = 255-(value-5*255);
+                    setLedColor.blue = 0;
+                } else if(value < 7*255) {
+                    setLedColor.red = 255;
+                    setLedColor.green = 255;
+                    setLedColor.blue = 255;
+                } else if(value <= 8*255) {
+                    setLedColor.red = 255-(value-7*255);
+                    setLedColor.green = 255-(value-7*255);
+                    setLedColor.blue = 255-(value-7*255);
+                }
+                
+                var color = 'rgb(' +
+                    setLedColor.red + ',' +
+                    setLedColor.green + ',' +
+                    setLedColor.blue + ')';
+                
+                resultElement.style.backgroundColor = color;
+            }
+            
+            slider_led.noUiSlider.on('change', function() {
+                set_actuator({'gateway': 'mn-cse',
+                        'user': 'CONTROL',
+                        'device': 'NOTIFIER',
+                        'value': 'rgb/'+setLedColor.red+'/'+setLedColor.green+'/'+setLedColor.blue
+                        });
+            });
+        </script>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://192.168.0.172:5050');
+            
+            var led1 = false;
+            var led2 = false;
+            var led3 = false;
+            var led4 = false;
+            var night_mode = false;
+
+            socket.on('device_update', function(devices) {
+                // DOOR 1
+                // true = ouvert ou fermé ?
+                if(devices.DOORLOCK === 'true') {
+                    $('#button_door_1').html(" OPEN ");
+                    $('#button_door_1').removeClass('btn-off');
+                    $('#button_door_1').addClass('btn-on');
+                } else {
+                    $('#button_door_1').html(" OPEN ");
+                    $('#button_door_1').removeClass('btn-on');
+                    $('#button_door_1').addClass('btn-off');
+                }
+                
+                // LIGHT 1
+                // true = allumé
+                if(devices.LED1 === 'true') {
+                    $('#button_light_1').html(" ON ");
+                    $('#button_light_1').removeClass('btn-off');
+                    $('#button_light_1').addClass('btn-on');
+                    led1 = true;
+                } else {
+                    $('#button_light_1').html(" OFF ");
+                    $('#button_light_1').removeClass('btn-on');
+                    $('#button_light_1').addClass('btn-off');
+                    led1 = false;
+                }
+                
+                // LIGHT 2
+                // true = allumé
+                if(devices.LED2 === 'true') {
+                    $('#button_light_2').html(" ON ");
+                    $('#button_light_2').removeClass('btn-off');
+                    $('#button_light_2').addClass('btn-on');
+                    led2 = true;
+                } else {
+                    $('#button_light_2').html(" OFF ");
+                    $('#button_light_2').removeClass('btn-on');
+                    $('#button_light_2').addClass('btn-off');
+                    led2 = false;
+                }
+                
+                // A/C
+                $('#temp_salon_consigne').html(devices.tempTh+' °C');
+                $('#temp_salon').html(devices.tempVal+' °C');
+                
+                // LUMINOSITY
+                $('#lumi_salon_consigne').html(devices.lumiTh+' lux');
+                $('#lumi_salon').html(devices.lumiVal+' lux');
+                
+                // NIGHT MODE
+                // true = allumé
+                if(devices.NIGHT === 'true') {
+                    $('#button_sleep_mode').html(" ON ");
+                    $('#button_sleep_mode').removeClass('btn-off');
+                    $('#button_sleep_mode').addClass('btn-on');
+                    led3 = true;
+                } else {
+                    $('#button_sleep_mode').html(" OFF ");
+                    $('#button_sleep_mode').removeClass('btn-on');
+                    $('#button_sleep_mode').addClass('btn-off');
+                    led3 = false;
+                }
+                
+                // LIGHT 3
+                // true = allumé
+                if(devices.LED3 === 'true') {
+                    $('#button_light_3').html(" ON ");
+                    $('#button_light_3').removeClass('btn-off');
+                    $('#button_light_3').addClass('btn-on');
+                    led3 = true;
+                } else {
+                    $('#button_light_3').html(" OFF ");
+                    $('#button_light_3').removeClass('btn-on');
+                    $('#button_light_3').addClass('btn-off');
+                    led3 = false;
+                }
+                
+                // LIGHT 4 
+                // true = allumé
+                if(devices.LED4 === 'true') {
+                    $('#button_light_4').html(" ON ");
+                    $('#button_light_4').removeClass('btn-off');
+                    $('#button_light_4').addClass('btn-on');
+                    led3 = true;
+                } else {
+                    $('#button_light_4').html(" OFF ");
+                    $('#button_light_4').removeClass('btn-on');
+                    $('#button_light_4').addClass('btn-off');
+                    led3 = false;
+                }
+            });
+            
+            function set_actuator(data) {
+                if(data.value === 'toggle') {
+                    switch(data.device) {
+                        case 'LED1':
+                            led1 = !led1;
+                            data.value = led1;
+                            break;
+                        case 'LED2':
+                            led2 = !led2;
+                            data.value = led2;
+                            break;
+                        case 'LED3':
+                            led3 = !led3;
+                            data.value = led3;
+                            break;
+                        case 'LED4':
+                            led4 = !led4;
+                            data.value = led4;
+                            break;
+                        case 'NIGHT':
+                            night_mode = !night_mode;
+                            data.value = night_mode;
+                            break;
+                        default:
+                            data.value = false;
+                     }
+                }
+                socket.emit('device_set', data);
+            }
+        </script>
+        <!-- Side menu -->
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "100%";
+            }
+            
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+        
+  </body>
+</html>
