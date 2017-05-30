@@ -1,0 +1,225 @@
+[
+    {
+        "id": "ebe3f2ea.ba4d8",
+        "type": "tab",
+        "label": "Flow 3"
+    },
+    {
+        "id": "4482bb22.7c1394",
+        "type": "e-mail",
+        "z": "ebe3f2ea.ba4d8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "leoelfique@gmail.com",
+        "dname": "Notif",
+        "x": 1215.5,
+        "y": 314,
+        "wires": []
+    },
+    {
+        "id": "533d6c70.61be94",
+        "type": "function",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "Header",
+        "func": "msg.headers = {};\nmsg.headers['X-M2M-Origin'] = 'admin:admin';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 284,
+        "wires": [
+            [
+                "dc9f9aa5.6d2c88"
+            ]
+        ]
+    },
+    {
+        "id": "dc9f9aa5.6d2c88",
+        "type": "http request",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "http://192.168.0.189:8080/~/mn-cse/mn-name/ALARM?op=get",
+        "tls": "",
+        "x": 570.000114440918,
+        "y": 274.3333911895752,
+        "wires": [
+            [
+                "6ecfc603.856de8"
+            ]
+        ]
+    },
+    {
+        "id": "d5ad8ee4.fa1c9",
+        "type": "inject",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "x": 207,
+        "y": 281,
+        "wires": [
+            [
+                "533d6c70.61be94"
+            ]
+        ]
+    },
+    {
+        "id": "450a5ce8.912714",
+        "type": "debug",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "notifa",
+        "x": 1187.5,
+        "y": 161,
+        "wires": []
+    },
+    {
+        "id": "6ecfc603.856de8",
+        "type": "xml",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "attr": "",
+        "chr": "",
+        "x": 747.5,
+        "y": 260,
+        "wires": [
+            [
+                "35877b9d.daeb84"
+            ]
+        ]
+    },
+    {
+        "id": "35877b9d.daeb84",
+        "type": "function",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "func": "var newstate = msg.payload.obj.bool[1].$.val\nvar oldstatea = global.get('oldstatea')||\"true\";\n\nif (newstate != oldstatea) {\n    if (newstate == \"true\") {\n        msg.notifa = \"true\";\n        msg.topic =\"BREAK IN ALERT\"\n        msg.payload = \"Hello,\\nSomeone is in your home.\\nRegards,\\nYour home.\"\n        return msg;\n    }\n    global.set('oldstatea',newstate);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 982.5,
+        "y": 285,
+        "wires": [
+            [
+                "450a5ce8.912714",
+                "4482bb22.7c1394"
+            ]
+        ]
+    },
+    {
+        "id": "e495e8c2.78b7a8",
+        "type": "e-mail",
+        "z": "ebe3f2ea.ba4d8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "leoelfique@gmail.com",
+        "dname": "Notif",
+        "x": 1129.5,
+        "y": 601,
+        "wires": []
+    },
+    {
+        "id": "8781c2f4.28f92",
+        "type": "function",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "Header",
+        "func": "msg.headers = {};\nmsg.headers['X-M2M-Origin'] = 'admin:admin';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 552,
+        "wires": [
+            [
+                "2e877add.ed8976"
+            ]
+        ]
+    },
+    {
+        "id": "2e877add.ed8976",
+        "type": "http request",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "http://192.168.0.189:8080/~/mn-cse/mn-name/ALARM?op=get",
+        "tls": "",
+        "x": 480.0000915527344,
+        "y": 554.3333740234375,
+        "wires": [
+            [
+                "22cb07ed.990ac8"
+            ]
+        ]
+    },
+    {
+        "id": "1aea4f56.2e8911",
+        "type": "inject",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "x": 147,
+        "y": 487,
+        "wires": [
+            [
+                "8781c2f4.28f92"
+            ]
+        ]
+    },
+    {
+        "id": "53301abd.78b484",
+        "type": "debug",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "notifw",
+        "x": 1116.5,
+        "y": 467,
+        "wires": []
+    },
+    {
+        "id": "22cb07ed.990ac8",
+        "type": "xml",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "attr": "",
+        "chr": "",
+        "x": 700.5,
+        "y": 537,
+        "wires": [
+            [
+                "a6ae747d.8b5358"
+            ]
+        ]
+    },
+    {
+        "id": "a6ae747d.8b5358",
+        "type": "function",
+        "z": "ebe3f2ea.ba4d8",
+        "name": "",
+        "func": "var newstate = msg.payload.obj.bool[2].$.val\nvar oldstatew = global.get('oldstatew')||\"true\";\n\nif (newstate != oldstatew) {\n    if (newstate == \"true\") {\n        msg.notif = \"true\";\n        msg.topic =\"WINDOW OPENED ALERT\"\n        msg.payload = \"Hello,\\nYou left the window opened. I hope this is alright.\\nRegards,\\nYour home.\"\n        return msg;\n    }\n    global.set('oldstatew',newstate);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 878.5,
+        "y": 537,
+        "wires": [
+            [
+                "53301abd.78b484",
+                "e495e8c2.78b7a8"
+            ]
+        ]
+    }
+]

@@ -1,0 +1,119 @@
+[
+    {
+        "id": "be0f6571.e3d8f8",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "41164513.7533dc",
+        "type": "http request",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 694.8334350585938,
+        "y": 345.0001697540283,
+        "wires": [
+            [
+                "cacadd4d.07307"
+            ]
+        ]
+    },
+    {
+        "id": "71e4b3d0.04107c",
+        "type": "function",
+        "z": "be0f6571.e3d8f8",
+        "name": "Header",
+        "func": "msg.headers = {};\nmsg.headers['X-M2M-Origin'] = 'admin:admin';\n\nvar count = global.get('count')||0;\nmsg.url = 'http://192.168.0.189:8080/~/mn-cse/mn-name/NOTIFIER?op=email/' + count;\nglobal.set('count',0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 511.8333396911621,
+        "y": 349.6667890548706,
+        "wires": [
+            [
+                "41164513.7533dc"
+            ]
+        ]
+    },
+    {
+        "id": "cacadd4d.07307",
+        "type": "debug",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "url",
+        "x": 880.8333740234375,
+        "y": 342.666748046875,
+        "wires": []
+    },
+    {
+        "id": "95928705.db6948",
+        "type": "e-mail in",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "protocol": "IMAP",
+        "server": "imap.gmail.com",
+        "useSSL": true,
+        "port": "993",
+        "box": "INBOX",
+        "disposition": "None",
+        "repeat": "10",
+        "x": 278.00002670288086,
+        "y": 228.33335876464844,
+        "wires": [
+            [
+                "45e55d1b.8a6894"
+            ]
+        ]
+    },
+    {
+        "id": "45e55d1b.8a6894",
+        "type": "function",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "func": "var count = global.get('count')||0;\ncount += 1;\nglobal.set('count',count);\nmsg.count = count;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 433.8333282470703,
+        "y": 229.00000190734863,
+        "wires": [
+            [
+                "bbdf5b7c.c8e6c8"
+            ]
+        ]
+    },
+    {
+        "id": "bbdf5b7c.c8e6c8",
+        "type": "debug",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "count",
+        "x": 608.8334121704102,
+        "y": 237.66668128967285,
+        "wires": []
+    },
+    {
+        "id": "1e7f2dec.bccac2",
+        "type": "inject",
+        "z": "be0f6571.e3d8f8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "x": 321.83333587646484,
+        "y": 349.00001335144043,
+        "wires": [
+            [
+                "71e4b3d0.04107c"
+            ]
+        ]
+    }
+]
