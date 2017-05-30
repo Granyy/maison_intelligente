@@ -3,14 +3,11 @@ import mraa.Dir;
 import mraa.Gpio;
 
 public class capteurIR {
-	private int etatCapteur;
 	private Gpio gpioCapteurIR;
-	private boolean open; //�tat de la fenetre
 	
 	//constructeur
 	public capteurIR(int pin){
 		init_Capteur(pin);
-		open=false;
 	}
 	
 	public void init_Capteur(int pin){

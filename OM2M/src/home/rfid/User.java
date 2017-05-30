@@ -41,9 +41,6 @@ public class User {
 	private boolean home;
 	private Map<String,Boolean> lights;
 	private Color RGB;
-	private int r;
-	private int g;
-	private int b;
 	
 	/**
 	 * Constructeur User
@@ -60,9 +57,6 @@ public class User {
 		lumiTh = lumi;
 		home = false;
 		RGB = new Color(rgb);
-		r = 255;
-		g = 253;
-		b = 252;
 		
 		lights = new HashMap<>();
 		String ledId;
@@ -164,37 +158,22 @@ public class User {
 	public void setLights(Map<String,Boolean> lights) {
 		this.lights = lights;
 	}
-
+	
+	/**
+	 * getRGB
+	 * @return RGB
+	 */
 	public Color getRGB() {
 		return RGB;
 	}
+	
+	/**
+	 * setRGB
+	 * @param rGB
+	 */
 
 	public void setRGB(Color rGB) {
 		RGB.setColor(rGB.getR(), rGB.getG(), rGB.getB());
-	}
-
-	public int getR() {
-		return r;
-	}
-
-	public void setR(int r) {
-		this.r = r;
-	}
-
-	public int getG() {
-		return g;
-	}
-
-	public void setG(int g) {
-		this.g = g;
-	}
-
-	public int getB() {
-		return b;
-	}
-
-	public void setB(int b) {
-		this.b = b;
 	}
 	
 }

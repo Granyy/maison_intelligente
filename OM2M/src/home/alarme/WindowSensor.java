@@ -4,7 +4,6 @@ import org.eclipse.om2m.commons.constants.ResponseStatusCode;
 import org.eclipse.om2m.commons.resource.ResponsePrimitive;
 import org.eclipse.om2m.home.Monitor;
 import org.eclipse.om2m.home.RessourceManager;
-import org.eclipse.om2m.home.rfid.UserProfile;
 
 
 public class WindowSensor {
