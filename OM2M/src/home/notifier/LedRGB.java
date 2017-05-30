@@ -29,7 +29,7 @@ public class LedRGB {
 	
 	/**
 	 * Constructeur
-	 * - met par défaut la couleur à blanc et allume la led
+	 * - met par defaut la couleur a blanc et allume la led
 	 * @param clock
 	 * @param data
 	 */
@@ -42,7 +42,7 @@ public class LedRGB {
 	
 	/**
 	 * setLedColor
-	 *  - met à jours l'attribut couleur
+	 *  - met a jours l'attribut couleur
 	 * @param col
 	 */
 	
@@ -53,7 +53,7 @@ public class LedRGB {
 	/**
 	 * ledOn
 	 * - allume la led
-	 * - met state à true
+	 * - met state a true
 	 */
 	
 	public void on() {
@@ -64,7 +64,7 @@ public class LedRGB {
 	/**
 	 * ledOff
 	 * - eteint la led
-	 * - met state à false
+	 * - met state a false
 	 */
 	
 	public void off() {

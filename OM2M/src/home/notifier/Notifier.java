@@ -48,7 +48,7 @@ public class Notifier {
 	 * - cree un AE
 	 * - cree un data container
 	 * - cree un descriptor container
-	 * - les noms sont configures à partir des differentes constantes de classe
+	 * - les noms sont configures a partir des differentes constantes de classe
 	 * - instancie la variable ledRGB qui fait reference a la led RGB
 	 */
 	

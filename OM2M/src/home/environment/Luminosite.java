@@ -37,6 +37,11 @@ public class Luminosite {
 	     }
 	}
 	
+	/**
+	 * LuminositeListener
+	 * Lit regulierement la luminosite
+	 *
+	 */
 	public static class LuminositeListener extends Thread{
 		
 		private boolean running = true;

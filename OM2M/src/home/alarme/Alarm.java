@@ -38,7 +38,7 @@ public class Alarm {
 	
 	 /**  Variables de classe :
 	 *  - 
-	 *  - boolean intrusion : situation d'effraction d�t�ct�e
+	 *  - boolean intrusion : situation d'effraction detectee
 	 */
 	static boolean intrusion=false;
 	static boolean ring = false;
@@ -47,10 +47,10 @@ public class Alarm {
 	
 	/**
 	 * createAlarmResources
-	 * - cr�e un AE
-	 * - cr�e un data container
-	 * - cr�e un descriptor container
-	 * - les noms sont configur�s � partir des diff�rentes constantes de classe
+	 * - cree un AE
+	 * - cree un data container
+	 * - cree un descriptor container
+	 * - les noms sont configures a partir des differentes constantes de classe
 	 */
 	
 	public static void createAlarmResources(){
@@ -77,10 +77,10 @@ public class Alarm {
 	
 	/**
 	 * WindowSensorkListener
-	 * - fonction principale s'ex�cutant dans le monitor
-	 * - g�re deux modes de s�curit�
+	 * - fonction principale s'executant dans le monitor
+	 * - gere deux modes de securite
 	 * 		-quand la derniere personne qui part oublie de fermer la fenetre => envoi d'un mail
-	 * 		-quand personne n'est � la maison, une ouverture de la fenetre d�clenche l'alarme
+	 * 		-quand personne n'est a la maison, une ouverture de la fenetre declenche l'alarme
 	 */
 	
 	
@@ -156,13 +156,13 @@ public class Alarm {
 	
 	/**
 	 * BuzzerController
-	 * - fonction s'ex�cutant dans le Controller, g�rant les requ�tes � destination de Doorlock
-	 * - query g�r�s :
+	 * - fonction s'executant dans le Controller, gerant les requetes a destination de Doorlock
+	 * - query geres :
 	 * 		- get : renvoie la valeur intrusion
 	 * 		- intrusion : intrusion vaut true, le buzzer sonne
 	 * @param : 
-	 * - String valueOp : query de la requ�te re�ue
-	 * - ResponsePrimitive responsein : reponse partiellement construite par le Controller g�n�ral
+	 * - String valueOp : query de la requete recue
+	 * - ResponsePrimitive responsein : reponse partiellement construite par le Controller general
 	 */
 	
 	public static ResponsePrimitive BuzzerController(String valueOp, ResponsePrimitive responsein) {

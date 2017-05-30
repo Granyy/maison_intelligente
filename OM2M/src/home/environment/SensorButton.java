@@ -8,6 +8,11 @@ public class SensorButton {
 	private boolean m_state;
 	private Gpio m_gpio;
 	
+	/**
+	 * Constructeur
+	 * Besoin du port
+	 * @param port
+	 */
 	public SensorButton(int port) {
 		m_port = port ;
 		m_state = false ;
@@ -15,10 +20,19 @@ public class SensorButton {
 		m_gpio.dir(Dir.DIR_IN);
 	}
 	
+	/**
+	 * getPort
+	 * @return port
+	 */
 	public int getPort() {
 		return m_port;
 	}
 	
+	/**
+	 * getState
+	 * Lit directement le gpio
+	 * @return state
+	 */
 	public boolean getState() {
 		boolean value ;
 		

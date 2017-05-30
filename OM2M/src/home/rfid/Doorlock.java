@@ -37,7 +37,7 @@ public class Doorlock {
 	static String DATA = "UNLOCK";
 	
 	 /**  Variables de classe :
-	 *  - Lock lock : reference à la serrure representee par le servo
+	 *  - Lock lock : reference a la serrure representee par le servo
 	 *  - boolean unlock : situation de la serrure (true pour ouverte)
 	 */
 	
@@ -49,7 +49,7 @@ public class Doorlock {
 	 * - cree un AE
 	 * - cree un data container
 	 * - cree un descriptor container
-	 * - les noms sont configures à partir des differentes constantes de classe
+	 * - les noms sont configures a partir des differentes constantes de classe
 	 * - instancie la variable lock representant la serrure
 	 */
 	
@@ -134,12 +134,12 @@ public class Doorlock {
 	
 	/**
 	 * DoorController
-	 * - fonction s'executant dans le Controller, gerant les requêtes à destination de Doorlock
+	 * - fonction s'executant dans le Controller, gerant les requetes a destination de Doorlock
 	 * - query geres :
 	 * 		- get : renvoie la valeur unlock
 	 * 		- unlock : unlock vaut true, la serrure est deverouillee
 	 * @param : 
-	 * - String valueOp : query de la requête reçue
+	 * - String valueOp : query de la requete recue
 	 * - ResponsePrimitive responsein : reponse partiellement construite par le Controller general
 	 */
 	

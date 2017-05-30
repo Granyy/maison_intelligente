@@ -5,7 +5,7 @@ import mraa.Gpio;
 public class capteurIR {
 	private int etatCapteur;
 	private Gpio gpioCapteurIR;
-	private boolean open; //état de la fenetre
+	private boolean open; //ï¿½tat de la fenetre
 	
 	//constructeur
 	public capteurIR(int pin){
@@ -23,7 +23,7 @@ public class capteurIR {
 		return gpioCapteurIR;
 	}
 	
-	// Le capteur n'est actif que si personne n'est à la maison/tout le monde est couché
+	// Le capteur n'est actif que si personne n'est a la maison/tout le monde est couche
 	 
 
 	
@@ -37,10 +37,10 @@ public class capteurIR {
 		}
 	}
 	
-	//Fonction de lecture à utiliser si capteur de luminosité 
+	//Fonction de lecture a utiliser si capteur de luminosite 
 	//public boolean isOpen(){
 		/*
-		 * étalonnage du capteur + algo seuil
+		 * etalonnage du capteur + algo seuil
 		 */
 		//return 	open;
 	//}

@@ -39,6 +39,11 @@ public class Temperature {
 	     }
 	}
 	
+	/**
+	 * TemperatureListener
+	 * Lit regulierement la temperature
+	 *
+	 */
 	public static class TemperatureListener extends Thread{
 		 
 		private boolean running = true;

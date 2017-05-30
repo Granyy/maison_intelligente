@@ -44,6 +44,10 @@ public class ButtonLed {
 	     }
 	}
 	
+	/**
+	 * ButtonListener
+	 * Allume ou eteint toutes les lumieres de la piece a vivre lorsque le bouton est presse
+	 */
 	public static class ButtonListener extends Thread{
 		 
 		private boolean running = true;

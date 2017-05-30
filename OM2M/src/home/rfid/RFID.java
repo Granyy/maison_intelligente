@@ -46,8 +46,8 @@ public class RFID {
 	
 	/**
 	 *  Constructeur RFID()
-	 *  - construit une map avec les différentes IDs
-	 *  - initialise et configure l'uart utilisé pour lire les IDs
+	 *  - construit une map avec les differentes IDs
+	 *  - initialise et configure l'uart utilise pour lire les IDs
 	 */
 	
 	public RFID() {
@@ -82,9 +82,9 @@ public class RFID {
 	
 	/**
 	 * readID
-	 * - Delais uTimeout pour présenter le tag RFID
-	 * - Si aucune donnée reçue, renvoi "null"
-	 * - Si donnée correspondante à un code à 12 chiffres
+	 * - Delais uTimeout pour presenter le tag RFID
+	 * - Si aucune donnee recue, renvoi "null"
+	 * - Si donnee correspondante a un code a 12 chiffres
 	 * 		- Reconnu : renvoi l'ID
 	 * 		- Non connu : renvoi "UNAUTHORIZED"
 	 * @return ID (string)

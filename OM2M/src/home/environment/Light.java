@@ -24,12 +24,18 @@ public class Light {
 	public static boolean led1Pref = false ;
 	public static boolean led2Pref = false ;
 	
-	//User defaultUser = new User("default", 0, Integer.MAX_VALUE,);				// User par defaut créé au cas où si besoin
+	
 	
 	public static Map<String,LED> lights;
 	public static LED Led1 ;
 	public static LED Led2 ; 
 	
+	
+	
+	/**
+	 * createLightsMap
+	 * Cree une Hashmap contenant toutes les LED que l'on veut
+	 */
 	public static void createLightsMap () {
 		Led1 = new LED(3,"LED1");
 		Led2 = new LED(10,"LED2");
@@ -71,6 +77,12 @@ public class Light {
 		}
 	
 	
+/**
+ * LightListener
+ * Met a jour l'etat des LED en fonction de 
+ * - si elles sont dans les preferences de l'utilisateur actif
+ * - si le seuil de luminosite a ete franchit
+ */
 public static class LightListener extends Thread{
 		
 		private boolean running = true;
@@ -84,7 +96,7 @@ public static class LightListener extends Thread{
 		public void run() {
 	        
 			while(running){
-				// A remplir en fonction de la fonction de Leo pour recuperer, en l'occurrence, les LEDs à allumer selon la préférence
+				
 				
 				Set<Entry<String, LED>> setHm = lights.entrySet();
 			    Iterator<Entry<String, LED>> it = setHm.iterator();

@@ -48,6 +48,11 @@ public class Ventilateur {
 	
 	
 	
+	/**
+	 * FanListener
+	 * Thread qui active le ventilateur en fonction de l'ecart entre la temperature ambiante et le seuil 
+	 * correspondant a la variable globale tempTh mis a jour sur evenement
+	 */
 	public static class FanListener extends Thread{
 		 
 		private boolean running = true;

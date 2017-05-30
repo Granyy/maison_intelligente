@@ -29,22 +29,35 @@ public class ActuatorFan {
 		m_pwm.period_us(period) ;
 	}
 	
-	/*public void init_ventilo() {
-		
-	}*/
 	
+	/**
+	 * enable_ventilo
+	 */
 	public void enable_ventilo() {
 		m_pwm.enable(true) ;
 	}
 
+	/**
+	 * setThreshold
+	 * Modifie le seuil associé au ventilateur
+	 * @param seuil
+	 */
 	public void setThreshold(double seuil) {
 		m_tempTh = seuil ;
 	}
 	
+	/**
+	 * getThreshold
+	 * @return threshold
+	 */
 	public double getThreshold() {
 		return m_tempTh ;
 	}
 	
+	/**
+	 * testTemp
+	 * Determine le niveau du ventilateur en fonction de l'ecart entre la temperature actuelle et le seuil actif
+	 */
 	public void testTemp() {
 		if (Temperature.tempValue < this.m_tempTh) {
 			Ventilateur.fanLevel = 0 ;
@@ -60,7 +73,11 @@ public class ActuatorFan {
 		}
 	}
 	
-	// Choisit le duty cycle sachant la température captée dans le sensor
+	
+	/**
+	 * chooseDuty
+	 * Choisit le duty cycle sachant la température captée dans le sensor
+	 */
 	public void chooseDuty() {
 		switch (Ventilateur.fanLevel) {
 			case 0 : 
@@ -82,6 +99,10 @@ public class ActuatorFan {
 		}
 	}
 
+	/**
+	 * set_duty
+	 * Ecrit le port pwm avec le duty cycle determine
+	 */
 	public void set_duty() {
 		m_pwm.write((float) m_duty) ;
 	}

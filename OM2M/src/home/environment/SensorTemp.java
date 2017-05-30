@@ -12,34 +12,59 @@ public class SensorTemp {
 	private final double B=4275.0 ;
 	
 	
+	/**
+	 * Constructeur avec port par defaut
+	 */
 	public SensorTemp() {
 		m_port = 0 ;
 	}
 	
+	/**
+	 * Constructeur avec port en argument
+	 * @param port
+	 */
 	public SensorTemp(int port) {
 		m_port = port ;
 	}
 	
+	/**
+	 * setPort
+	 * @param port
+	 */
 	public void setPort(int port) {
 		m_port = port ;
 	}
 	
+	/**
+	 * getPort
+	 * @return m_port
+	 */
 	public int getPort() {
 		return m_port ;
 	}
 	
+	/**
+	 * getTemp
+	 * @return m_temp
+	 */
 	public double getTemp() {
 		return m_temp ;
 	}
 	
-	
-	// Initialise le Sensor sur le port choisi
+
+	/**
+	 * initSensor
+	 */
 	public void initSensor() {
 		m_aio = new Aio(m_port);
 	}
 	
 	
-	// Lit la température et la convertit en Celcius, puis la stocke dans l'attribut m_temp
+
+	/**
+	 * readTemp
+	 * Lit la température et la convertit en Celcius, puis la stocke dans l'attribut m_temp
+	 */
 	public void readTemp() {
 		double R = 1024.0/((double)m_aio.read())-1.0;
 		R = R0*R ;

@@ -11,6 +11,16 @@ import org.eclipse.om2m.home.environment.Ventilateur;
 
 public class EnvironmentPreferences {
 
+	/**
+	 * setProfile
+	 * Fonction permettant de mettre a jour toutes les variables globales en fonction des preferences de l'user en argument
+	 * - tempTh
+	 * - lumiTh
+	 * - pref des Led
+	 * - pref couleur ledRGB
+	 * 
+	 * @param user
+	 */
 	public static void setProfile(User user) {
 		Ventilateur.tempTh = user.getTempTh() ;
 		Light.lumiTh = user.getLumiTh() ;
