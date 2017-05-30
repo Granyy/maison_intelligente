@@ -53,7 +53,7 @@ public class Temperature {
 			
 	        
 			while(running){
-				// Simulate a random measurement of the sensor
+				
 				temp.readTemp();
 				
 				tempValue = temp.getTemp();

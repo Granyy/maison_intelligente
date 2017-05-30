@@ -52,7 +52,7 @@ public class Luminosite {
 			sLumi.initSensor();
 	        
 			while(running){
-				// Simulate a random measurement of the sensor
+				
 				sLumi.readLumi();
 				
 				lumiValue = sLumi.getLumi();

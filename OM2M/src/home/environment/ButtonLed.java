@@ -57,7 +57,7 @@ public class ButtonLed {
 			
 	        
 			while(running){
-				// Simulate a random measurement of the sensor
+				
 				buttonValue = sButton.getState();
 				
 				if(previousValue!=buttonValue) {
